@@ -1,16 +1,9 @@
 from copy import deepcopy
 
-L = [[0, 1, 1]]
-C = [[1],[1]]
-R = [[1, 1]]
-# rhomination games are represented with lists
-# each element is a triangle and every other triangle is reflected
-# so if x and y are both even or both odd board[x][y] is this triangle <|
-# if one is even and one is odd board[x][y] is this triangle |>
-
-
-l = {'': 'R'}
-c = {'': 'L'}
+# Rhomination games are represented with lists, each element is a triangle 
+# and every other triangle is reflected. So if x and y are both even or both
+# odd board[x][y] is this triangle <| or if one is even and one is odd 
+# board[x][y] is this triangle |>
 
 outcome_classes = {
     'LLL': 0, 'LLC': 0, 'LCL': 0, 'CLL': 0, 'LCC': 0, 'CLC': 0, 'CCL': 0, 
@@ -19,6 +12,7 @@ outcome_classes = {
     'CCR': 0, 'CRC': 0, 'RCC': 0, 'CRR': 0, 'RCR': 0, 'RRC': 0, 'RRR': 0,
 }
 
+# Check if [[1, 0, 1, 1, 0, 0],[1, 0, 0, 0, 1, 1]] is the identity
 def check_ones(i):
     ones = [[1, 0, 1, 1, 0, 0],[1, 0, 0, 0, 1, 1]]
     games = generate_boards(i, generate_list(i))
@@ -29,6 +23,7 @@ def check_ones(i):
             print(g)
             print(outcome1, outcome2)
 
+# Add outcome classes to outcome class dictionary for games in an x by y grid
 def check_square(x, y):
     boards = generate_boards(x, generate_list(y))
 
@@ -39,7 +34,7 @@ def check_square(x, y):
 #            print(b)
 
 
-# --- board generation ---  
+# Create all grids made of x lists from lists
 def generate_boards(x, lists):
     if (x == 1): return [[l.copy()] for l in lists] 
     boards = generate_boards(x - 1, lists)
@@ -48,6 +43,7 @@ def generate_boards(x, lists):
         stuff += [deepcopy(b) + [l.copy()] for l in lists]
     return stuff
 
+# Generate all lists of length x (1 means there is a free triangle)
 def generate_list(x):
     if (x == 1): return [[1],[0]]
     lists = generate_list(x - 1)
@@ -58,7 +54,7 @@ def generate_list(x):
     return stuff
 
 
-# --- game solver ---
+# Get the outcome class for a given grid
 def outcome_class(game):
     outcome = left(game) + center(game) + right(game)
     return outcome
@@ -131,11 +127,14 @@ def right(game):
                     return 'R'
                 if currw == 'L':
                     posw = 'L'
-    if posw == 'L': return 'L'
-    else: return 'C'
+    if posw == 'L': 
+        return 'L'
+    else: 
+        return 'C'
 
 
-# --- game addition ---
+# Adds two grids (addition in this context means any given player can move on either grid 
+# if some such move is avalible and there are no moves on both grids)
 def add(b1, b2):
     if b1 == []: return b2
     if b2 == []: return b1
@@ -157,7 +156,8 @@ def add(b1, b2):
     return board
 
 
-# --- board cleaning functions ---
+# Addition sometimes creates big messy boards, this function trims off
+# big chunks of empty space that aren't needed
 def clean(b):
     cull_islands(b)
     # remove all empty far right columns 
@@ -177,7 +177,7 @@ def clean(b):
           row.pop(0)
           row.pop(0)
 
-# remove any isolated trianges that can't be used
+# Remove any isolated trianges that can't be used
 def cull_islands(b):
     for x in range(len(b)):
       for y in range(len(b[x])):

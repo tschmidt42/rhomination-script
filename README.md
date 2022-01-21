@@ -22,7 +22,7 @@ which defined Rhombination in which every player can be assumed to make the move
 3 of which we found counter examples against. For example we can disprove the second conjecture is "There are no Rhombination games in LRC, CLR, or RCL" by running
 
 ```python
-from greene_convention import *
+from rhombination import *
 
 # computes every game that can be played in a 3 by 5 grid
 check_square(3, 5)

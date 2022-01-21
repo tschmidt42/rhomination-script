@@ -11,7 +11,7 @@ turn Each player either places a rhombus in such a way that it does not overlap 
 are then put into "outcome classes" which spesfies who wins when ay player goes first, this is notated by XYZ where X is the player who wins when Left plays 
 first, Y is the player who wins when Center plays first, and Z is the player who wins when Right goes first.
 
-![Example Rhombination game](/images/rhombination_example.png)
+![Example Rhombination game](https://github.com/tschmidt42/rhomination-scripts/blob/main/images/Rhombination_example.png)
 
 In two player combinatorial games (games without chance and with perfect information) to find the best move you can always assume best play from the opponent. 
 This is not the case in three player games, since one player can 'win make' one opponent over the other. Rhombination attempts to resolve this by ranking every 
